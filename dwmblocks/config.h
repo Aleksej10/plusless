@@ -22,12 +22,12 @@ static const Block blocks[] = {
 	/* {"",	"sb-nettraf",	1,	16}, */
 	/* {"",	"sb-volume",	0,	10}, */
 	/* {"",	"sb-battery",	5,	3}, */
-  {" ☎️  ", "adb devices -l | grep -e 'device:' | sed -rn 's/.*?device:(\\w+)\\s+.*/\\1/p'", 5, 23},
+  {" ☎️  ", "adb devices -l | grep -e 'device:' | sed -rn 's/.*?device:(\\w+)\\s+.*/\\1/p' | xargs", 5, 23},
 	{" 💲 ", "curl -s rate.sx/1xmr | awk '{print int($1)}'",	900,	22},
   {" ☀️  ", "brightness", 0, 10 },
   {" 🔊 ", "echo $(pamixer --get-volume)%", 0, 9},
   {" 🔋 ", "echo \"$(cat /sys/class/power_supply/BAT0/capacity)%\"", 5, 3},
-  {" 💾 ", "cnt=$(($(lsblk -dn | wc -l) - 1)); [ $cnt -gt 0 ] && echo $cnt 'unmounted device(s)'", 5, 2},
+  {" 💾 ", "cnt=$(($(lsblk -dn | wc -l) - 1)); [ $cnt -gt 0 ] && echo $cnt 'new device(s)'", 5, 2}, // use parted in future
 	{" 🚢 ", "date +'%A(%u) %d. %B(%-m) ``%y %I:%M %p'",	60,	1},
 	/* {"",	"sb-internet",	5,	4}, */
 	/* {"",	"sb-help-icon",	0,	15}, */
