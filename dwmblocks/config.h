@@ -22,8 +22,8 @@ static const Block blocks[] = {
 	/* {"",	"sb-nettraf",	1,	16}, */
 	/* {"",	"sb-volume",	0,	10}, */
 	/* {"",	"sb-battery",	5,	3}, */
-  {" ☎️  ", "adb devices -l | grep -e 'device:' | sed -rn 's/.*?device:(\\w+)\\s+.*/\\1/p'", 1000, 22},
-	{" 💲 ", "curl -s rate.sx/1xmr | awk '{print int($1)}'",	6000,	22},
+  {" ☎️  ", "adb devices -l | grep -e 'device:' | sed -rn 's/.*?device:(\\w+)\\s+.*/\\1/p'", 5, 23},
+	{" 💲 ", "curl -s rate.sx/1xmr | awk '{print int($1)}'",	900,	22},
   {" ☀️  ", "brightness", 0, 10 },
   {" 🔊 ", "echo $(pamixer --get-volume)%", 0, 9},
   {" 🔋 ", "echo \"$(cat /sys/class/power_supply/BAT0/capacity)%\"", 5, 3},
