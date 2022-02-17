@@ -1,0 +1,4 @@
+dwm 
+*.o
+*.gch
+*.tar.gz
