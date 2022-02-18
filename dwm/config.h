@@ -108,6 +108,15 @@ static Key keys[] = {
 	/* { MODKEY,                       XK_space,  setlayout,      {0} }, */
 	/* { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} }, */
 
+	{ MODKEY,                       XK_r,     spawn,      SHCMD("st -e ranger") },
+	{ MODKEY|ShiftMask,             XK_r,     spawn,      SHCMD("st -e lf") },
+	{ MODKEY,                       XK_g,     spawn,      SHCMD("chromium") },
+	{ MODKEY,                       XK_m,     spawn,      SHCMD("mirage") },
+	{ MODKEY|ShiftMask,             XK_m,     spawn,      SHCMD("element-desktop") },
+
+	{ MODKEY,                       XK_w,     spawn,      SHCMD("st -e sudo nmtui") },
+	{ MODKEY,                       XK_h,     spawn,      SHCMD("st -e sudo -E htop") },
+
 	{ MODKEY,			                  XK_minus,	spawn,		SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+9 dwmblocks") },
 	{ MODKEY,			                  XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+9 dwmblocks") },
 
