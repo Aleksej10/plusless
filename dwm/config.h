@@ -10,18 +10,17 @@ static const char *fonts[]          = { "monospace:style=Retina,Regular:pixelsiz
 static const char dmenufont[]       = "monospace:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true";
 /* static const char *fonts[]          = { "FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true" }; */
 /* static const char dmenufont[]       = "FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true"; */
-static const char col_gray1[]       = "#1d45bd";
-static const char col_gray2[]       = "#1d45bd";
+static const char col_gray1[]       = "#282828";
+static const char col_gray2[]       = "#282828";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_red[]         = "#ff0044";
+static const char col_red[]         = "#d71513";
 static const char col_yellow[]      = "#ffee00";
-static const char col_cyan[]        = "#ff00ff";
-/* static const char col_cyan[]        = "#282828"; */
+static const char col_cyan[]        = "#d71513";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray1, col_yellow,  col_cyan  },
+	[SchemeSel]  = { col_gray1, col_red,  col_cyan  },
 };
 
 /* tagging */

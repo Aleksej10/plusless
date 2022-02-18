@@ -123,23 +123,23 @@ static const char *colorname_old[] = {
  static const char *colorname[] = {
  	/* 8 normal colors */
 	"#282828", /* black   */
-	"#d71513", /* red     */
+	"#689d6a", /* cyan    */
 	"#708238", /* green   */
 	"#ffee00", /* yellow  */
-	"#458588", /* blue    */
 	"#b16286", /* magenta */
-	"#689d6a", /* cyan    */
-	"#e5e9f0", /* white   */
+	"#458588", /* blue    */
+	"#d71513", /* red     */
+	"#eeeeee", /* white   */
  
  	/* 8 bright colors */
 	"#a2a2a2", /* black   */
-	"#d71513", /* red     */
+	"#689d6a", /* cyan    */
 	"#708238", /* green   */
 	"#ffee00", /* yellow  */
-	"#458588", /* blue    */
 	"#b16286", /* magenta */
-	"#689d6a", /* cyan    */
-	"#e5e9f0", /* white   */
+	"#458588", /* blue    */
+	"#d71513", /* red     */
+	"#eeeeee", /* white   */
  
  	[255] = 0,
  
