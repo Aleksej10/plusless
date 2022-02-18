@@ -22,9 +22,9 @@ static const Block blocks[] = {
 	/* {"",	"sb-nettraf",	1,	16}, */
 	/* {"",	"sb-volume",	0,	10}, */
 	/* {"",	"sb-battery",	5,	3}, */
-  {" ☎️  ", "adb devices -l | grep -e 'device:' | sed -rn 's/.*?device:(\\w+)\\s+.*/\\1/p' | xargs", 5, 23},
+  {" ☎️ ", "adb devices -l | grep -e 'device:' | sed -rn 's/.*?device:(\\w+)\\s+.*/\\1/p' | xargs", 5, 23},
 	{" 💲 ", "curl -s rate.sx/1xmr | awk '{print int($1)}'",	900,	22},
-  {" ☀️  ", "brightness", 0, 10 },
+  {" ☀️ ", "brightness", 0, 10 },
   {" 🔊 ", "echo $(pamixer --get-volume)%", 0, 9},
   {" 🔋 ", "echo \"$(cat /sys/class/power_supply/BAT0/capacity)%\"", 5, 3},
   {" 💾 ", "cnt=$(($(lsblk -dn | wc -l) - 1)); [ $cnt -gt 0 ] && echo $cnt 'new device(s)'", 5, 2}, // use parted in future
@@ -34,7 +34,7 @@ static const Block blocks[] = {
 };
 
 //Sets delimiter between status commands. NULL character ('\0') means no delimiter.
-static char const *delim = " | ";
+static char const *delim = "|";
 
 // Have dwmblocks automatically recompile and run when you edit this file in
 // vim with the following line in your vimrc/init.vim:
