@@ -3,3 +3,4 @@ stest
 *.o 
 *.gch
 *.tar.gz
+.ccls-cache

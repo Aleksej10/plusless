@@ -2,3 +2,4 @@ dwm
 *.o
 *.gch
 *.tar.gz
+.ccls-cache

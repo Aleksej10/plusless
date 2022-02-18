@@ -1,6 +1,5 @@
-st
+slock
 *.o 
 *.gch
 *.tar.gz
 .ccls-cache
-

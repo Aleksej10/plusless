@@ -2,4 +2,5 @@ dwmblocks
 *.o 
 *.gch
 *.tar.gz
+.ccls-cache
 

@@ -100,6 +100,7 @@ static Key keys[] = {
 	/* { MODKEY,                       XK_Return, zoom,           {0} }, */
 	/* { MODKEY,                       XK_Tab,    view,           {0} }, */
 	/* { MODKEY|ShiftMask,             XK_c,      killclient,     {0} }, */
+  { MODKEY|ShiftMask,             XK_l,      spawn,         SHCMD("slock")  },
 	{ MODKEY,			                  XK_q,		   killclient,	   {0} },
 	/* { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, */
 	/* { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} }, */
