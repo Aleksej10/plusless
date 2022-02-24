@@ -27,7 +27,7 @@ static const Block blocks[] = {
   {" ☀️ ", "brightness", 0, 10 },
   {" 🔊 ", "echo $(pamixer --get-volume)%", 0, 9},
   {" 🔋 ", "echo \"$(cat /sys/class/power_supply/BAT0/capacity)%\"", 5, 3},
-  {" 💾 ", "cnt=$(($(lsblk -dn | wc -l) - 1)); [ $cnt -gt 0 ] && echo $cnt 'new device(s)'", 5, 2}, // use parted in future
+  {" 💾 ", "cnt=$(($(lsblk -dn | wc -l) - 1)); [ $cnt -gt 0 ] && echo $cnt 'new device'", 5, 2}, // use parted in future
 	{" 🚢 ", "date +'%A(%u) %d. %B(%-m) ``%y %I:%M %p'",	60,	1},
 	/* {"",	"sb-internet",	5,	4}, */
 	/* {"",	"sb-help-icon",	0,	15}, */
