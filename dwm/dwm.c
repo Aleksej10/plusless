@@ -255,6 +255,7 @@ static int strtopid(char *s, pid_t *pid);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *);
+static void tile2(Monitor*);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void togglefullscr(const Arg *arg);
@@ -2054,7 +2055,7 @@ tagmon(const Arg *arg)
 }
 
 void
-tile(Monitor *m)
+tile2(Monitor *m)
 {
 	unsigned int i, n, h, mw, my, ty;
 	Client *c;
@@ -2071,15 +2072,52 @@ tile(Monitor *m)
 		if (i < m->nmaster) {
 			h = (m->wh - my) / (MIN(n, m->nmaster) - i);
 			if (n == 1)
-				resize(c, m->wx - c->bw, m->wy, m->ww, m->wh, False);
+				resize(c, m->wx - 2 * c->bw, m->wy, m->ww, m->wh, False);
 			else
-				resize(c, m->wx - c->bw, m->wy + my, mw - c->bw, h - c->bw, False);
+				resize(c, m->wx - 2 * c->bw, m->wy + my, mw - 2* c->bw, h - 2 * c->bw, False);
 		} else {
 			h = (m->wh - ty) / (n - i);
 
-			resize(c, m->wx + mw - c->bw, m->wy + ty, m->ww - mw, h - c->bw, False);
+			resize(c, m->wx + mw - 2 * c->bw, m->wy + ty, m->ww - mw, h - 2 * c->bw, False);
       ty += HEIGHT(c) - c->bw;
 		}
+}
+
+void
+tile(Monitor* mon)
+{
+  unsigned i, n, slave_x, nx, ny, mw, mh, box_width, box_height, client_width, client_height, b2;
+  Client* c;
+
+  for(n = 0, c = nexttiled(mon->clients); c; c = nexttiled(c->next), n++);
+  if (n == 0) return;
+
+  c = nexttiled(mon->clients);
+
+  if (n == 1) {
+    resize(c, mon->wx, mon->wy, mon->ww, mon->wh, False);
+    return;
+  }
+
+  b2 = 2 * c->bw;
+
+  box_width = mon->ww / 2;
+  client_width = box_width - b2;
+
+  box_height = mon->wh / (n - 1);
+  client_height = box_height - b2;
+
+  slave_x = mon->wx + box_width;
+
+
+  mw = mon->ww / 2;
+  nx = mon->wx + mw;
+  mh = mon->wh / (n - 1);
+
+  resize(c, mon->wx, mon->wy, client_width, mon->wh - b2, False);
+
+  for(i = 0, c = nexttiled(c->next); c; i++, c = nexttiled(c->next))
+    resize(c, slave_x, mon->wy + i * box_height, client_width, client_height, False);
 }
 
 void
