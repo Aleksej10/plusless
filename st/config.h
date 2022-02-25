@@ -7,7 +7,7 @@
  */
 /* static char *font = "FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true"; */
 static char *font = "monospace:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true";
-static char *font2[] = { "JoyPixels:pixelsize=10:antialias=true:autohint=true" };
+static char *font2[] = { "Noto Color Emoji:pixelsize=10:antialias=true:autohint=true" };
 static int borderpx = 2;
 
 /*

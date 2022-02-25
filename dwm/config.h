@@ -6,7 +6,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true", "JoyPixels:pixelsize=10:antialias=true:autohint=true" };
+static const char *fonts[]          = { "monospace:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true", "Noto Color Emoji:pixelsize=10:antialias=true:autohint=true" };
 static const char dmenufont[]       = "monospace:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true";
 /* static const char *fonts[]          = { "FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true" }; */
 /* static const char dmenufont[]       = "FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true"; */
@@ -74,7 +74,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *konsolecmd[]  = { "konsole", NULL };
 
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */
 static const StatusCmd statuscmds[] = {
@@ -88,7 +87,6 @@ static Key keys[] = {
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawnsshaware,  {.v = konsolecmd } },
 	{ MODKEY,                       XK_Return, spawnsshaware,  {.v = termcmd } },
 	/* { MODKEY,                       XK_b,      togglebar,      {0} }, */
 	/* { MODKEY,                       XK_j,      focusstack,     {.i = +1 } }, */
@@ -110,7 +108,10 @@ static Key keys[] = {
 
 	{ MODKEY,                       XK_r,     spawn,      SHCMD("st -e ranger") },
 	{ MODKEY|ShiftMask,             XK_r,     spawn,      SHCMD("st -e lf") },
+
 	{ MODKEY,                       XK_g,     spawn,      SHCMD("chromium") },
+	{ MODKEY|ShiftMask,             XK_g,     spawn,      SHCMD("firefox") },
+
 	{ MODKEY,                       XK_m,     spawn,      SHCMD("mirage") },
 	{ MODKEY|ShiftMask,             XK_m,     spawn,      SHCMD("element-desktop") },
 
