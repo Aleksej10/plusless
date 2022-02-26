@@ -1,13 +1,5 @@
-/* See LICENSE file for copyright and license details. */
+static char *font = "monospace";
 
-/*
- * appearance
- *
- * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
- */
-/* static char *font = "FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true"; */
-static char *font = "monospace:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true";
-static char *font2[] = { "Noto Color Emoji:pixelsize=10:antialias=true:autohint=true" };
 static int borderpx = 2;
 
 /*

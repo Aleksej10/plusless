@@ -6,10 +6,10 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true", "Noto Color Emoji:pixelsize=10:antialias=true:autohint=true" };
-static const char dmenufont[]       = "monospace:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true";
-/* static const char *fonts[]          = { "FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true" }; */
-/* static const char dmenufont[]       = "FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=14:antialias=true:autohint=true"; */
+
+static const char *fonts[]          = { "monospace", "emoji" };
+static const char dmenufont[]       = "monospace";
+
 static const char col_gray1[]       = "#282828";
 static const char col_gray2[]       = "#282828";
 static const char col_gray3[]       = "#bbbbbb";
