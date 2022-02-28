@@ -1,4 +1,4 @@
-static char *font = "monospace";
+static char *font = "monospace:pixelsize=14";
 
 static int borderpx = 2;
 
@@ -237,7 +237,7 @@ static Shortcut shortcuts[] = {
 	/* { TERMMOD,              XK_Next,        zoom,           {.f = -1} }, */
 	{ TERMMOD,              XK_K,           zoom,           {.f = +1} },
 	{ TERMMOD,              XK_J,           zoom,           {.f = -1} },
-	/* { TERMMOD,              XK_Home,        zoomreset,      {.f =  0} }, */
+	{ TERMMOD,              XK_H,           zoomreset,      {.f =  0} },
 	/* { TERMMOD,              XK_C,           clipcopy,       {.i =  0} }, */
 	/* { TERMMOD,              XK_V,           clippaste,      {.i =  0} }, */
 	{ MODKEY,               XK_c,           clipcopy,       {.i =  0} },
