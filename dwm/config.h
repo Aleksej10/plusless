@@ -118,11 +118,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,     spawn,      SHCMD("st -e sudo nmtui") },
 	{ MODKEY,                       XK_h,     spawn,      SHCMD("st -e sudo -E htop") },
 
-	{ MODKEY,			                  XK_minus,	spawn,		SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+9 dwmblocks") },
-	{ MODKEY,			                  XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+9 dwmblocks") },
+	{ MODKEY,			                  XK_minus,	spawn,		SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+9 go_blocks") },
+	{ MODKEY,			                  XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+9 go_blocks") },
 
-	{ MODKEY|ShiftMask,			        XK_minus,	spawn,		SHCMD("sudo brightness down; pkill -RTMIN+10 dwmblocks") },
-	{ MODKEY|ShiftMask,			        XK_equal, spawn,		SHCMD("sudo brightness up; pkill -RTMIN+10 dwmblocks") },
+	{ MODKEY|ShiftMask,			        XK_minus,	spawn,		SHCMD("sudo brightness down; pkill -RTMIN+10 go_blocks") },
+	{ MODKEY|ShiftMask,			        XK_equal, spawn,		SHCMD("sudo brightness up; pkill -RTMIN+10 go_blocks") },
 
 	{ MODKEY,			                  XK_f,		   togglefullscr,	 {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
