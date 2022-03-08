@@ -24,7 +24,6 @@ type Block struct {
   command string
 }
 
-
 var (
   results []string
   last_result string
@@ -36,11 +35,10 @@ const (
   SIGRTMAX int = 64
 )
 
-func sig_to_int(sig os.Signal) int {
+func sig2int(sig os.Signal) int {
   reg, err := regexp.Compile("[^0-9]")
 
   if err != nil {
-    fmt.Fprintln(os.Stderr, err)
     return -1
   }
 
@@ -61,7 +59,7 @@ func initialize() chan os.Signal {
       min = block.interval
     }
 
-    bind_channel(&ch, block.signal, i)
+    go bind_channel(&ch, block.signal, i)
     go start_block(i)
   } 
 
@@ -78,7 +76,7 @@ func bind_channel(ch *chan os.Signal, sig int, i int) {
 }
 
 func start_block(i int) {
-  exec_block(i)
+  go exec_block(i)
 
   interval := time.Duration(blocks[i].interval)
 
@@ -96,28 +94,24 @@ func update_block(i int) {
 }
 
 func exec_command(command string) string {
-  cmd := exec.Command("dash", "-c", command)
+  cmd := exec.Command(SHELL, "-c", command)
   stdout, err := cmd.StdoutPipe()
 
   if err != nil {
-    fmt.Fprintln(os.Stderr, err)
     return ""
   }
 
   if err := cmd.Start(); err != nil {
-    fmt.Fprintln(os.Stderr, err)
     return ""
   }
 
   data, err := ioutil.ReadAll(stdout)
 
   if err != nil {
-    fmt.Fprintln(os.Stderr, err)
     return ""
   }
 
   if err := cmd.Wait(); err != nil {
-    fmt.Fprintln(os.Stderr, err)
     return ""
   }
 
@@ -129,7 +123,7 @@ func exec_block(i int) {
 }
 
 func start_drawing(interval float64){
-  draw_blocks()
+  go draw_blocks()
 
   if !math.IsInf(interval, 1) {
     for {
@@ -163,13 +157,11 @@ func status_string() string {
   for i, res := range results {
     r := strings.TrimSpace(res)
     if r != "" {
-      status += fmt.Sprintf("%v %v %v ", blocks[i].icon, r, delim)
+      status += fmt.Sprintf("%v %v %v ", blocks[i].icon, r, DELIM)
     }
   }
 
-  status = strings.TrimRight(status, " " + delim)
-
-  return status
+  return strings.TrimRight(status, " " + DELIM)
 }
 
 func main() {
@@ -177,10 +169,10 @@ func main() {
 
   for {
     sig := <-ch
-    i := sig_to_int(sig)
+    i := sig2int(sig)
 
     if i > 0 {
-      update_block(sig_2_block[i])
+      go update_block(sig_2_block[i])
     }
   }
 }

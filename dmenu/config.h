@@ -1,4 +1,6 @@
 static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
+static int fuzzy = 1;
+static int managed = 0;
 /* -fn option overrides fonts[0]; default X11 font or font set */
 
 static const char *fonts[] = { "monospace:pixelsize=14" };
@@ -11,7 +13,7 @@ static const char *colors[SchemeLast][2] = {
 	[SchemeOut] = { "#000000", "#00ffff" },
 };
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
-static unsigned int lines      = 4;
+static unsigned int lines      = 6;
 
 /*
  * Characters not considered part of a word while deleting words

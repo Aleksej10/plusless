@@ -70,6 +70,10 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+/* helper for sending signals to go_blocks */
+#define STR_EXPAND(str) #str
+#define SENDSIG(sig) STR_EXPAND(pkill -RTMIN+sig go_blocks)
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
@@ -118,11 +122,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,     spawn,      SHCMD("st -e sudo nmtui") },
 	{ MODKEY,                       XK_h,     spawn,      SHCMD("st -e sudo -E htop") },
 
-	{ MODKEY,			                  XK_minus,	spawn,		SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+9 go_blocks") },
-	{ MODKEY,			                  XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+9 go_blocks") },
+	{ MODKEY,			                  XK_minus,	spawn,		SHCMD("pamixer --allow-boost -d 5;"SENDSIG(9)) },
+	{ MODKEY,			                  XK_equal,	spawn,		SHCMD("pamixer --allow-boost -i 5;"SENDSIG(9)) },
 
-	{ MODKEY|ShiftMask,			        XK_minus,	spawn,		SHCMD("sudo brightness down; pkill -RTMIN+10 go_blocks") },
-	{ MODKEY|ShiftMask,			        XK_equal, spawn,		SHCMD("sudo brightness up; pkill -RTMIN+10 go_blocks") },
+	{ MODKEY|ShiftMask,			        XK_minus,	spawn,		SHCMD("sudo brightness down;"SENDSIG(10)) },
+	{ MODKEY|ShiftMask,			        XK_equal, spawn,		SHCMD("sudo brightness up;"SENDSIG(10)) },
 
 	{ MODKEY,			                  XK_f,		   togglefullscr,	 {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },

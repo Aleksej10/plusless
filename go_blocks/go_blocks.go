@@ -17,4 +17,7 @@ var blocks = []Block {
   {0,  5,   "🚢", "date +'%A(%u) %d. %B(%-m) ``%y %I:%M %p'" },
 }
 
-const delim string = "|"
+const (
+  DELIM string = ""
+  SHELL string = "dash"
+)
