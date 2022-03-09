@@ -15,6 +15,7 @@ import (
   "time"
   "math"
   "strings"
+  "sync"
 )
 
 type Block struct {
@@ -26,8 +27,9 @@ type Block struct {
 
 var (
   results []string
-  last_result string
-  sig_2_block = make(map[int]int)
+  sig_2_block = make(map[int]struct{int; time.Time})
+  should_update bool = false
+  mutex sync.Mutex
 )
 
 const (
@@ -71,19 +73,17 @@ func initialize() chan os.Signal {
 func bind_channel(ch *chan os.Signal, sig int, i int) {
   if sig > 0 {
     signal.Notify(*ch, syscall.Signal(sig + SIGRTMIN))
-    sig_2_block[sig] = i
+    sig_2_block[sig] =  struct { int; time.Time } { i, time.Now() }
   }
 }
 
 func start_block(i int) {
-  go exec_block(i)
-
   interval := time.Duration(blocks[i].interval)
 
   if interval > 0 {
     for {
-      time.Sleep(interval * time.Second)
       exec_block(i)
+      time.Sleep(interval * time.Second)
     }
   } 
 }
@@ -119,7 +119,24 @@ func exec_command(command string) string {
 }
 
 func exec_block(i int) {
-  results[i] = exec_command(blocks[i].command)
+  res := exec_command(blocks[i].command)
+
+  if results[i] != res {
+    results[i] = res
+
+    if (blocks[i].interval == 0) {
+      for sig, v := range sig_2_block {
+        if v.int == i {
+          sig_2_block[sig] = struct { int; time.Time } { i, time.Now() }
+        }
+      }
+    }
+
+    mutex.Lock()
+    defer mutex.Unlock()
+
+    should_update = true
+  }
 }
 
 func start_drawing(interval float64){
@@ -128,17 +145,34 @@ func start_drawing(interval float64){
   if !math.IsInf(interval, 1) {
     for {
       time.Sleep(time.Duration(interval) * time.Second)
+      clear_blocks()
       draw_blocks()
     }
   }
 } 
 
-func draw_blocks(){
-  s := status_string()
+func clear_blocks() {
+  now := time.Now()
 
-  if s != last_result {
-    last_result = s
-    update_dwm_status(s)
+  for _, v := range sig_2_block {
+    if now.Sub(v.Time) > (2 * time.Second) {
+      results[v.int] = ""
+
+      mutex.Lock()
+      should_update = true
+      mutex.Unlock()
+    }
+  }
+}
+
+func draw_blocks(){
+  if should_update {
+    go update_dwm_status(status_string())
+    
+    mutex.Lock()
+    defer mutex.Unlock()
+
+    should_update = false
   }
 }
 
@@ -157,7 +191,7 @@ func status_string() string {
   for i, res := range results {
     r := strings.TrimSpace(res)
     if r != "" {
-      status += fmt.Sprintf("%v %v %v ", blocks[i].icon, r, DELIM)
+      status += strings.TrimSpace(blocks[i].icon + " " + r) + strings.TrimSpace(" " + DELIM) + " "
     }
   }
 
@@ -172,7 +206,7 @@ func main() {
     i := sig2int(sig)
 
     if i > 0 {
-      go update_block(sig_2_block[i])
+      go update_block(sig_2_block[i].int)
     }
   }
 }
