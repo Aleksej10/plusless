@@ -219,6 +219,8 @@ func main() {
     if sig_num := sig2int(sig); sig_num > 0 {
       for i, block := range blocks {
         if sig_num == block.signal {
+          fmt.Println("got fucking signal", sig_num)
+
           go update_block(i)
           break
         }

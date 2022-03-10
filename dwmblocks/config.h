@@ -24,13 +24,12 @@ static const Block blocks[] = {
 	/* {"",	"sb-battery",	5,	3}, */
 
 
-  /* {" 🌎 ", "nmcli con show --active | awk 'NR == 2 { print  $1 }'", 60, 52}, */
-  {" 💿 ", "df -h | awk '{ if ($6 == \"/home\") print $4 }'", 300, 51},
-  {" ☎️ ", "adb devices -l | grep -e 'device:' | sed -rn 's/.*?device:(\\w+)\\s+.*/\\1/p' | xargs", 5, 23},
-	{" 💲 ", "curl -s rate.sx/1xmr | awk '{print int($1)}'",	900,	22},
-  {" ☀️ ", "brightness", 0, 10 },
-  {" 🔊 ", "echo $(pamixer --get-volume)%", 0, 9},
-  {" 🔋 ", "echo \"$(cat /sys/class/power_supply/BAT0/capacity)%\"", 5, 3},
+  {"", "sb-internet", 60, 12},
+  /* {" 💿 ", "df -h | awk '{ if ($6 == \"/home\") print $4 }'", 300, 51}, */
+	/* {" 💲 ", "curl -s rate.sx/1xmr | awk '{print int($1)}'",	900,	22}, */
+  /* {" ☀️ ", "brightness", 0, 10 }, */
+  /* {" 🔊 ", "echo $(pamixer --get-volume)%", 0, 9}, */
+  /* {" 🔋 ", "echo \"$(cat /sys/class/power_supply/BAT0/capacity)%\"", 5, 3}, */
   {" 💾 ", "cnt=$(($(lsblk -dn | wc -l) - 1)); [ $cnt -gt 0 ] && echo $cnt 'new device'", 5, 2}, // use parted in future
 	{" 🚢 ", "date +'%A(%u) %d. %B(%-m) ``%y %I:%M %p'",	60,	1}
 	/* {" ⌨️ ", "setxkbmap -query | awk '/layout/{ print $2 }'",	0,	50}, */
