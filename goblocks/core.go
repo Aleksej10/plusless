@@ -25,9 +25,14 @@ type Block struct {
   command string
 }
 
+type IndexTimestamp struct {
+  index int
+  last_changed time.Time
+}
+
 var (
   results []string
-  sig_2_block = make(map[int]struct{int; time.Time})
+  sig2decayingblock = make(map[int]IndexTimestamp)
   should_update bool = false
   mutex sync.Mutex
 )
@@ -61,7 +66,7 @@ func initialize() chan os.Signal {
       min = block.interval
     }
 
-    go bind_channel(&ch, block.signal, i)
+    go bind_channel(&ch, i)
     go start_block(i)
   } 
 
@@ -70,10 +75,13 @@ func initialize() chan os.Signal {
   return ch
 }
 
-func bind_channel(ch *chan os.Signal, sig int, i int) {
-  if sig > 0 {
-    signal.Notify(*ch, syscall.Signal(sig + SIGRTMIN))
-    sig_2_block[sig] =  struct { int; time.Time } { i, time.Now() }
+func bind_channel(ch *chan os.Signal, i int) {
+  sig := blocks[i].signal
+
+  signal.Notify(*ch, syscall.Signal(sig + SIGRTMIN))
+
+  if blocks[i].interval == 0 {
+    sig2decayingblock[sig] =  IndexTimestamp { i, time.Now() }
   }
 }
 
@@ -121,22 +129,22 @@ func exec_command(command string) string {
 func exec_block(i int) {
   res := exec_command(blocks[i].command)
 
-  if results[i] != res {
-    results[i] = res
-
-    if (blocks[i].interval == 0) {
-      for sig, v := range sig_2_block {
-        if v.int == i {
-          sig_2_block[sig] = struct { int; time.Time } { i, time.Now() }
-        }
-      }
-    }
-
-    mutex.Lock()
-    defer mutex.Unlock()
-
-    should_update = true
+  if results[i] == res {
+    return
   }
+
+  results[i] = res
+
+  for sig, v := range sig2decayingblock {
+    if v.index == i {
+      sig2decayingblock[sig] = IndexTimestamp { i, time.Now() }
+      break
+    }
+  }
+
+  mutex.Lock()
+    should_update = true
+  mutex.Unlock()
 }
 
 func start_drawing(interval float64){
@@ -154,12 +162,16 @@ func start_drawing(interval float64){
 func clear_blocks() {
   now := time.Now()
 
-  for _, v := range sig_2_block {
-    if now.Sub(v.Time) > (2 * time.Second) {
-      results[v.int] = ""
+  for _, v := range sig2decayingblock {
+    if blocks[v.index].interval != 0 {
+      continue
+    }
+
+    if (results[v.index] != "") && (now.Sub(v.last_changed) > (2 * time.Second)) {
+      results[v.index] = ""
 
       mutex.Lock()
-      should_update = true
+        should_update = true
       mutex.Unlock()
     }
   }
@@ -170,9 +182,8 @@ func draw_blocks(){
     go update_dwm_status(status_string())
     
     mutex.Lock()
-    defer mutex.Unlock()
-
-    should_update = false
+      should_update = false
+    mutex.Unlock()
   }
 }
 
@@ -190,8 +201,9 @@ func status_string() string {
 
   for i, res := range results {
     r := strings.TrimSpace(res)
-    if r != "" {
-      status += strings.TrimSpace(blocks[i].icon + " " + r) + strings.TrimSpace(" " + DELIM) + " "
+
+    if (r != "") {
+      status += fmt.Sprintf("%c%v%v ", blocks[i].signal,  strings.TrimSpace(blocks[i].icon + " " + r), strings.TrimSpace(" " + DELIM))
     }
   }
 
@@ -206,7 +218,7 @@ func main() {
     i := sig2int(sig)
 
     if i > 0 {
-      go update_block(sig_2_block[i].int)
+      go update_block(sig2decayingblock[i].index)
     }
   }
 }
