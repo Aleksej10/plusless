@@ -215,10 +215,14 @@ func main() {
 
   for {
     sig := <-ch
-    i := sig2int(sig)
-
-    if i > 0 {
-      go update_block(sig2decayingblock[i].index)
+    
+    if sig_num := sig2int(sig); sig_num > 0 {
+      for i, block := range blocks {
+        if sig_num == block.signal {
+          go update_block(i)
+          break
+        }
+      }
     }
   }
 }
