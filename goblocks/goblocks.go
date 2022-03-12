@@ -22,6 +22,7 @@ var blocks = []Block {
   {0,    5,       false,  "",   "sb-battery" },
   {0,    5,       false,  "💾", "cnt=$(($(lsblk -dn | wc -l) - 1)); [ $cnt -gt 0 ] && echo $cnt 'new device'" }, // use parted instead
   {0,    5,       false,  "",   "sb-date" },
+  {0,    0,       false,  "",   "sb-sys" },
 }
 
 const (

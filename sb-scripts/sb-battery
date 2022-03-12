@@ -9,7 +9,7 @@ case $BLOCK_BUTTON in
 ♻: stagnant charge
 🔌: charging
 ⚡: charged
-❗: battery very low!
+❗: battery very low!" ;;
 	6) st -e "$EDITOR" "$0" ;;
 esac
 
