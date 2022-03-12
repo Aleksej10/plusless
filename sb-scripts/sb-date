@@ -1,0 +1,8 @@
+#!/bin/dash
+
+case $BLOCK_BUTTON in
+  1) dunstify "🚢 $(date +'%A(%u) %d. %B(%-m) ')" "$(cal -m | tail +2)" ;;
+	6) st -e "$EDITOR" "$0" ;;
+esac
+
+date +'%d %b %l:%M'
