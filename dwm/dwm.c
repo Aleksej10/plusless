@@ -2037,15 +2037,24 @@ strtopid(char *s, pid_t *pid)
 void
 sigstatusbar(const Arg *arg)
 {
-	union sigval sv;
+	/* union sigval sv; */
 
 	if (!statussig)
 		return;
-	sv.sival_int = arg->i;
+	/* sv.sival_int = arg->i; */
 	if ((statuspid = getstatusbarpid()) <= 0)
 		return;
 
-	sigqueue(statuspid, SIGRTMIN+statussig, sv);
+	/* sigqueue(statuspid, SIGRTMIN+statussig, sv); */
+  char cmd[128];
+  sprintf(cmd, "pkill -RTMIN+%d %s; pkill -RTMIN+%d %s", statussig, STATUSBAR, arg->i, STATUSBAR);
+
+  char *arglist[] = {"/bin/sh", "-c", cmd, NULL};
+
+  if (fork() == 0){
+    setsid();
+    execvp("/bin/sh", arglist);
+  }
 }
 
 

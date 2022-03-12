@@ -28,7 +28,7 @@ type Block struct {
   command string
 }
 
-type Sig struct { block_sig, button_sig int }
+type Sig struct { block, button int }
 type BlockIndex struct { block *Block; index int }
 
 var (
@@ -85,26 +85,33 @@ func initialize() chan os.Signal {
 func start_block(bi BlockIndex){
   if bi.block.fadeout {
     index2last_updated[bi.index] = time.Now()
-  } 
+  } else{
+    go exec_block(bi, 0)
+  }
   if interval := time.Duration(bi.block.interval) * time.Second; interval > 0 {
     for {
-      exec_block(bi)
       time.Sleep(interval)
+      exec_block(bi, 0)
     }
   }
 }
 
-func update_block(bi BlockIndex) {
-  exec_block(bi)
+func update_block(sig Sig) {
+  bi := sig2block[sig.block]
+  exec_block(bi, sig.button)
   draw_blocks()
 }
 
-func exec_command(command string) string {
+func exec_command(command string, button_sig int) string {
   cmd := exec.Command(SHELL, "-c", command)
   stdout, err := cmd.StdoutPipe()
 
   if err != nil {
     return ""
+  }
+  if button_sig > 0 {
+    cmd.Env = os.Environ()
+    cmd.Env = append(cmd.Env, fmt.Sprintf("BLOCK_BUTTON=%v", button_sig))
   }
   if err := cmd.Start(); err != nil {
     return ""
@@ -120,8 +127,8 @@ func exec_command(command string) string {
   return string(data)
 }
 
-func exec_block(bi BlockIndex) {
-  res := exec_command(bi.block.command)
+func exec_block(bi BlockIndex, button_sig int) {
+  res := exec_command(bi.block.command, button_sig)
 
   if results[bi.index] == res {
     return
@@ -188,16 +195,27 @@ func status_string() string {
   return strings.TrimRight(status, " " + DELIM)
 }
 
-func parse_signal(ch *chan os.Signal) (block_sig, button_sig int) {
-  sig := sig2int(<-*ch)
+func parse_signal(ch *chan os.Signal) (sig Sig) {
+  sig.block = sig2int(<-*ch)
 
-  if sig < 7 {
-    return 
+  if !is_block_signal(sig.block) {
+    return Sig { 0, 0 }
   }
-  if _, found := sig2block[sig]; found {
-    block_sig = sig
+  sig.button = sig2int(<-*ch)
+
+  if sig.block == sig.button {
+    sig.button = 0
+    return
   }
-  return 
+  if (sig.button > 0) || (sig.button < 7) {
+    return
+  }
+  return Sig { 0, 0 }
+}
+
+func is_block_signal(sig int) (yes bool) {
+  _, yes = sig2block[sig]
+  return
 }
 
 func map_blocks(blocks *[]Block) (m map[int]BlockIndex) {
@@ -265,10 +283,10 @@ func main() {
   ch := initialize()
 
   for {
-    block_sig, _ := parse_signal(&ch)
+    sig := parse_signal(&ch)
 
-    if block_sig > 0 {
-      go update_block(sig2block[block_sig])
+    if sig.block > 0 {
+      go update_block(sig)
     }
   }
 }

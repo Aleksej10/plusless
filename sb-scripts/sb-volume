@@ -1,0 +1,9 @@
+#!/bin/dash
+case $BLOCK_BUTTON in
+  1) dunstify "scroll to adjust volume" ;;
+  4) pamixer --allow-boost -d 5; ;;
+  5) pamixer --allow-boost -i 5; ;;
+	6) st -e "$EDITOR" "$0" ;;
+esac
+
+echo "$(pamixer --get-volume)%"

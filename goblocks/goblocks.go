@@ -17,8 +17,8 @@ var blocks = []Block {
   {0,    5,       false,  "💿", "df -h | awk '{ if ($6 == \"/home\") print $4 }'" },
   {0,    5,       false,  "☎️",  "adb devices -l | grep -e 'device:' | sed -rn 's/.*?device:(\\w+)\\s+.*/\\1/p' | xargs" },
   {0,    300,     false,  "💲", "curl -s rate.sx/1xmr | awk '{print int($1)}'" },
-  {10,   0,       true,   "☀️",  "brightness" },
-  {9,    0,       true,   "🔊", "echo $(pamixer --get-volume)%" },
+  {10,   0,       false,   "☀️",  "sb-brightness" },
+  {9,    0,       false,   "🔊", "sb-volume" },
   {0,    5,       false,  "",   "sb-battery" },
   {0,    5,       false,  "💾", "cnt=$(($(lsblk -dn | wc -l) - 1)); [ $cnt -gt 0 ] && echo $cnt 'new device'" }, // use parted instead
   {0,    5,       false,  "🚢", "date +'%A(%u) %d. %B(%-m) `%y %I:%M %p'" },
@@ -29,3 +29,11 @@ const (
   SHELL string = "dash"
   FADEOUT_TIME float64 = 2
 )
+
+// button signals:
+// 1 - left click
+// 2 - middle click
+// 3 - right click
+// 4 - scroll down
+// 5 - scroll up
+// 6 - shift + left click

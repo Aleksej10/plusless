@@ -1,0 +1,27 @@
+#!/bin/bash
+
+max=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+b=$(cat /sys/class/backlight/intel_backlight/brightness)
+let tick=$max/10 
+let n=($b/$tick)*$tick
+let p=($n/$tick)*10
+
+let up=$n+$tick
+let up=$(($up > $max ? $max : $up ))
+
+let down=$n-$tick
+let down=$(($down < 0 ? 0 : $down ))
+
+case $BLOCK_BUTTON in
+  1) dunstify "scroll to adjust brightness" ;;
+  4) echo $down > /sys/class/backlight/intel_backlight/brightness ;;
+  5) echo $up > /sys/class/backlight/intel_backlight/brightness ;;
+	6) st -e "$EDITOR" "$0" ;;
+esac
+
+case $1 in
+  up) echo $up > /sys/class/backlight/intel_backlight/brightness ;;
+  down) echo $down > /sys/class/backlight/intel_backlight/brightness ;;
+esac
+
+echo "$p%"
