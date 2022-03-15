@@ -2045,6 +2045,11 @@ sigstatusbar(const Arg *arg)
 	if ((statuspid = getstatusbarpid()) <= 0)
 		return;
 
+  /* kill(statuspid, SIGRTMIN + statussig); */
+  /* kill(statuspid, SIGRTMIN + arg->i); */
+
+  /* return; */
+
 	/* sigqueue(statuspid, SIGRTMIN+statussig, sv); */
   char cmd[128];
   sprintf(cmd, "pkill -RTMIN+%d %s; pkill -RTMIN+%d %s", statussig, STATUSBAR, arg->i, STATUSBAR);

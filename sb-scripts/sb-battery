@@ -4,7 +4,7 @@
 # to charge status (🔌 for plugged up, 🔋 for discharging on battery, etc.).
 
 case $BLOCK_BUTTON in
-	1) dunstify "🔋 Battery module" "🔋: discharging
+	1) dunstify "Battery module" "<br>🔋: discharging
 🛑: not charging
 ♻: stagnant charge
 🔌: charging

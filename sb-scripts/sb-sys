@@ -15,7 +15,6 @@ case $BLOCK_BUTTON in
     '🟢 reboot') $ctl reboot -i ;;
     '🔴 shutdown') $ctl poweroff -i ;;
     '📺 display off') xset dpms force off ;;
-    *) exit 1 ;;
     esac
   ;;
 	6) st -e "$EDITOR" "$0" ;;

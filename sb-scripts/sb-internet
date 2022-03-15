@@ -5,19 +5,20 @@
 # Show 🔒 if a vpn connection is active
 
 case $BLOCK_BUTTON in
-	1) dunstify "🌐 Internet module" "\- Click to connect
+	1) dunstify "Internet module" "<br>\- Right click to connect
 ❌: wifi disabled
-📡: no wifi connection
-📶: wifi connection with quality
+❌: no wifi connection
+📡: wifi connection with quality
 ❎: no ethernet
 🌐: ethernet working
 🔒: vpn is active
 " ;;
+  3) st -e nmtui ;;
 	6) st -e "$EDITOR" "$0" ;;
 esac
 
 if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null ; then
-  wifiicon="📡 $(nmcli con show --active | awk 'NR == 2 { print  $1 }') $(awk '/^\s*w/ { print int($3 / 14) * 20 "%" }' /proc/net/wireless)"
+  wifiicon="📡 $(nmcli con show --active | awk 'NR == 2 { print  $1 }') $(awk '/^\s*w/ { print int($3 * 1.42) "%" }' /proc/net/wireless)"
 elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null ; then
   wifiicon=""
 fi

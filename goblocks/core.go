@@ -197,11 +197,13 @@ func status_string() string {
 
 func parse_signal(ch *chan os.Signal) (sig Sig) {
   sig.block = sig2int(<-*ch)
+  fmt.Printf("block sig: %v\n", sig.block)
 
   if !is_block_signal(sig.block) {
     return Sig { 0, 0 }
   }
   sig.button = sig2int(<-*ch)
+  fmt.Printf("button sig: %v\n", sig.button)
 
   if sig.block == sig.button {
     sig.button = 0
@@ -284,6 +286,7 @@ func main() {
 
   for {
     sig := parse_signal(&ch)
+    fmt.Printf("got signal: %v\n", sig)
 
     if sig.block > 0 {
       go update_block(sig)

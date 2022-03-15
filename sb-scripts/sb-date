@@ -1,7 +1,7 @@
 #!/bin/dash
 
 case $BLOCK_BUTTON in
-  1) dunstify "🚢 $(date +'%A(%u) %d. %B(%-m) ')" "$(cal -m --color=always | sed -r 's:.\[7m:<b><u>:g' | sed -r 's:.\[27m:</u></b>:g' | tail +2)" ;;
+  1) dunstify "$(date +'%A(%u) %d. %B(%-m) ')" "<br>$(cal -m --color=always | sed -r 's:.\[7m:<b><u>:g' | sed -r 's:.\[27m:</u></b>:g' | tail +2)" ;;
 	6) st -e "$EDITOR" "$0" ;;
 esac
 
