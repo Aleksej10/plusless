@@ -31,9 +31,10 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "St",      NULL,     NULL,           0,         0,          1,          0,         -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,          1,         -1 },
+	/* class              instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "neovide",          NULL,     NULL,           0,         0,          0,          0,         -1 },
+	{ "st-256color",      NULL,     NULL,           0,         0,          1,          0,         -1 },
+	{ NULL,               NULL,     "Event Tester", 0,         0,          0,          1,         -1 },
 };
 
 /* layout(s) */
@@ -70,16 +71,18 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-#define STATUSBAR "goblocks"
+#define STATUSBAR "rblocks"
+#define SPACE " "
 
-/* helper for sending signals to go_blocks */
+/* helper for sending signals to status bar service */
 #define STR_EXPAND(str) #str
-#define SENDSIG(sig) STR_EXPAND(pkill -RTMIN+sig goblocks; pkill -RTMIN+sig goblocks)
+#define SENDSIG(sig) STR_EXPAND(pkill -RTMIN+sig)SPACE STATUSBAR STR_EXPAND(;) STR_EXPAND(pkill -RTMIN+sig)SPACE STATUSBAR
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *retroterm[]  = { "cool-retro-term", NULL };
 
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */
 static const StatusCmd statuscmds[] = {
@@ -94,6 +97,7 @@ static Key keys[] = {
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawnsshaware,  {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawnsshaware,  {.v = retroterm } },
 	/* { MODKEY,                       XK_b,      togglebar,      {0} }, */
 	/* { MODKEY,                       XK_j,      focusstack,     {.i = +1 } }, */
 	/* { MODKEY,                       XK_k,      focusstack,     {.i = -1 } }, */
@@ -118,8 +122,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_g,     spawn,      SHCMD("chromium") },
 	{ MODKEY|ShiftMask,             XK_g,     spawn,      SHCMD("firefox") },
 
-	{ MODKEY,                       XK_m,     spawn,      SHCMD("mirage") },
-	{ MODKEY|ShiftMask,             XK_m,     spawn,      SHCMD("element-desktop") },
+	{ MODKEY,                       XK_m,     spawn,      SHCMD("element-desktop") },
+	{ MODKEY|ShiftMask,             XK_m,     spawn,      SHCMD("mirage") },
 
 	{ MODKEY,                       XK_w,     spawn,      SHCMD("st -e sudo nmtui") },
 	{ MODKEY,                       XK_h,     spawn,      SHCMD("st -e sudo -E htop") },
