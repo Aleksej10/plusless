@@ -20,6 +20,7 @@
 
 #include "st.h"
 #include "win.h"
+#include "sixel.h" // SIXEL
 
 #if   defined(__linux)
  #include <pty.h>
@@ -163,6 +164,7 @@ static void sigchld(int);
 static void ttywriteraw(const char *, size_t);
 
 static void csidump(void);
+static void dcshandle(void); // SIXEL
 static void csihandle(void);
 static void csiparse(void);
 static void csireset(void);
@@ -226,6 +228,7 @@ static ssize_t xwrite(int, const char *, size_t);
 /* Globals */
 static Term term;
 static Selection sel;
+static sixel_state_t sixel_st; //SIXEL
 static CSIEscape csiescseq;
 static STREscape strescseq;
 static int iofd = 1;

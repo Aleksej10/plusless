@@ -8,7 +8,7 @@ pub const BLOCKS: &'static [CfgBlk] = &[
 
   // signals [1..6] are reserved for button events
   // use numbers 7-30 for custom signals
-
+  CfgBlk { sig: 0,    t: 600,   ico: "",     cmd: "bash $HOME/tmp/tariffs/automatic/download_tariff.sh" },
   CfgBlk { sig: 0,    t: 5,     ico: "",     cmd: "sb-cpu" },
   CfgBlk { sig: 0,    t: 5,     ico: "",     cmd: "sb-internet" },
   CfgBlk { sig: 0,    t: 5,     ico: "💿",   cmd: "df -h | awk '{ if ($6 == \"/home\") print $4 }'" },

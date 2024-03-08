@@ -3,7 +3,7 @@ NAME = rblocks
 release:
 	cargo build --release
 
-install: release
+install:
 	mkdir -p /usr/local/bin
 	cp -f target/release/$(NAME) /usr/local/bin/$(NAME)
 	chmod 755 /usr/local/bin/$(NAME)

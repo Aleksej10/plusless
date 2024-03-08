@@ -4,7 +4,7 @@
 
 include config.mk
 
-SRC = st.c x.c hb.c
+SRC = st.c x.c hb.c sixel.c sixel_hls.c
 OBJ = $(SRC:.c=.o)
 
 all: options st

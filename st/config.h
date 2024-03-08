@@ -1,4 +1,5 @@
-static char *font = "monospace:pixelsize=14";
+/* static char *font = "monospace:pixelsize=14"; */
+static char *font = "hive:pixelsize=15";
 
 static int borderpx = 2;
 
@@ -21,9 +22,10 @@ char *vtiden = "\033[?6c";
 
 /* Kerning / character bounding-box multipliers */
 static float cwscale = 1.0;
+/* static float cwscale = 1.07; */
 /* static float chscale = 1.1689; */
-static float chscale = 1.1;
-/* static float chscale = 1.0; */
+/* static float chscale = 1.1; */
+static float chscale = 1.0;
 
 /*
  * word delimiter string
@@ -115,32 +117,71 @@ static const char *colorname_old[] = {
 
  /* static const char *colorname_gruvbox[] = { */
  static const char *colorname[] = {
- 	/* 8 normal colors */
-	"#282828", /* black   */
-	"#b16286", /* magenta */
-	"#708238", /* green   */
-	"#ffee00", /* yellow  */
-	"#689d6a", /* cyan    */
-	"#458588", /* blue    */
-	"#d71513", /* red     */
-	"#eeeeee", /* white   */
+  /* 8 normal colors */
+  "#efefef", /* white   */
+  "#ce2029", /* red     */
+  "#007d32", /* green   */
+  "#ffd800", /* yellow  */
+  "#1c39bb", /* blue    */
+  "#663399", /* magenta */
+  "#167c80", /* cyan    */
+  "#000000", /* black   */
+
+  /* 8 bright colors */
+  "#6b6b6b", /* white   */
+  "#ce2029", /* red     */
+  "#007d32", /* green   */
+  "#ffd800", /* yellow  */
+  "#1c39bb", /* blue    */
+  "#663399", /* magenta */
+  "#167c80", /* cyan    */
+  "#000000", /* black   */
+  /* "#4b4b4b", /1* black   *1/ */
+
+  /* "#cfa5a7", /1* red     *1/ */
+  /* "#647d6e", /1* green   *1/ */
+  /* "#fff7cc", /1* yellow  *1/ */
+  /* "#959cba", /1* blue    *1/ */
+  /* "#8a7a99", /1* magenta *1/ */
+  /* "#667f80", /1* cyan    *1/ */
+  /* "#dedede", /1* white   *1/ */
+
+  [255] = 0,
+
+  /* more colors can be added after 255 to use with DefaultXX */
+  "#efefef", /* background */
+  "#000000", /* foreground */
+ };
+
+ static const char *colorname_new[] = {
  
+ 	/* 8 normal colors */
+	"#1b1b1b", /* black   */
+	"#383838", /* magenta */
+	"#545454", /* green   */
+	"#717171", /* yellow  */
+	"#8d8d8d", /* cyan    */
+	"#aaaaaa", /* blue    */
+	"#c6c6c6", /* red     */
+	"#e3e3e3", /* white   */
+
  	/* 8 bright colors */
-	"#a2a2a2", /* black   */
-	"#b16286", /* magenta */
-	"#708238", /* green   */
-	"#ffee00", /* yellow  */
-	"#689d6a", /* cyan    */
-	"#458588", /* blue    */
-	"#d71513", /* red     */
-	"#eeeeee", /* white   */
+	"#000000", /* black   */
+	"#663399", /* magenta */
+	"#007d32", /* green   */
+	"#ffd800", /* yellow  */
+	"#ff7900", /* cyan    */
+	"#1c39bb", /* blue    */
+	"#ce2029", /* red     */
+	"#ffffff", /* white   */
  
  	[255] = 0,
  
  	/* more colors can be added after 255 to use with DefaultXX */
 	"#282828", /* background */
-	"#d8dee9", /* foreground */
+	"#d8d8d8", /* foreground */
  };
+
 
 /*
  * Default colors (colorname index)

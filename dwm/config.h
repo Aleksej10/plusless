@@ -7,16 +7,25 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
-static const char *fonts[]          = { "monospace:pixelsize=14", "emoji" };
-static const char dmenufont[]       = "monospace:pixelsize=14";
+/* static const char *fonts[]          = { "monospace:pixelsize=14", "emoji" }; */
+/* static const char dmenufont[]       = "monospace:pixelsize=14"; */
 
-static const char col_gray1[]       = "#282828";
-static const char col_gray2[]       = "#282828";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_red[]         = "#d71513";
+static const char *fonts[]          = { "hive:pixelsize=15", "emoji" };
+static const char dmenufont[]       = "hive:pixelsize=15";
+
+/* static const char col_gray1[]       = "#000000"; */
+/* static const char col_gray2[]       = "#000000"; */
+/* static const char col_gray3[]       = "#efefef"; */
+/* static const char col_gray4[]       = "#efefef"; */
+
+static const char col_gray3[]       = "#000000";
+static const char col_gray4[]       = "#000000";
+static const char col_gray1[]       = "#efefef";
+static const char col_gray2[]       = "#efefef";
+
+static const char col_red[]         = "#ce2029";
 static const char col_yellow[]      = "#ffee00";
-static const char col_cyan[]        = "#d71513";
+static const char col_cyan[]        = "#ce2029";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray1 },
@@ -119,11 +128,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,     spawn,      SHCMD("st -e ranger") },
 	{ MODKEY|ShiftMask,             XK_r,     spawn,      SHCMD("st -e lf") },
 
+	{ MODKEY,                       XK_s,     spawn,      SHCMD("coreshot -w") },
+	{ MODKEY|ShiftMask,             XK_s,     spawn,      SHCMD("st -e ranger $HOME/Pictures/Screenshots/") },
+
 	{ MODKEY,                       XK_g,     spawn,      SHCMD("chromium") },
-	{ MODKEY|ShiftMask,             XK_g,     spawn,      SHCMD("firefox") },
+	{ MODKEY|ShiftMask,             XK_g,     spawn,      SHCMD("chromium --incognito") },
 
 	{ MODKEY,                       XK_m,     spawn,      SHCMD("element-desktop") },
-	{ MODKEY|ShiftMask,             XK_m,     spawn,      SHCMD("mirage") },
+	/* { MODKEY|ShiftMask,             XK_m,     spawn,      SHCMD("mirage") }, */
+	{ MODKEY,                       XK_n,     spawn,      SHCMD("lfcd ~/dev") },
 
 	{ MODKEY,                       XK_w,     spawn,      SHCMD("st -e sudo nmtui") },
 	{ MODKEY,                       XK_h,     spawn,      SHCMD("st -e sudo -E htop") },
